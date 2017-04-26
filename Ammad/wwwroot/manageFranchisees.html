@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Test project</title>
+    <script src="/sys/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="/sys/polymer/polymer.html">
+    <link rel="import" href="/sys/puppet-client/puppet-client.html">
+    <link rel="import" href="/sys/starcounter-debug-aid/src/starcounter-debug-aid.html" />
+    <style>
+        button {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+        table.altrowstable {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #a9c6c9;
+            border-collapse: collapse;
+        }
+
+        table.altrowstable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+
+        table.altrowstable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+
+        .oddrowcolor {
+            background-color: #d4e3e5;
+        }
+
+        .evenrowcolor {
+            background-color: #c3dde0;
+        }
+
+        body {
+            font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
+        }
+
+        input {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+<template id="root" is="dom-bind">
+    <h1>Welcome</h1>
+    <manage-franchisees model="{{model}}"></manage-franchisees>
+    
+    <dom-module id="manage-franchisees">
+        <template>
+            <h2>Create Main Corporation</h2>
+            <table style="width:50%;" class="altrowstable">
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        <input type="text" value="{{model.NewCompany$.Name$::change}}" />
+                    </td>
+                </tr>
+            </table>
+            
+            <p><button on-click="createCorporation">Create corporation</button></p>
+            <h2>List of Corporations</h2>
+            <template is="dom-repeat" items="{{model.Companies$}}" as="company">
+                <div>
+                    <modify-company item="{{company}}"></modify-company>
+                </div>
+            </template>
+        </template>
+        <script>
+         Polymer({
+             is: "manage-franchisees",
+             properties: {
+                 model: {
+                     type: Object,
+                     notify: true,
+                     reflectToAttribute: true
+                 },
+                 company: {
+                     type: Object
+                 }
+             },
+             save: function (e) {
+                 this.model.Save$++;
+             },
+             createCorporation: function (e) {
+                 this.model.Create$++;
+             },
+             createFranchisee: function (e) {
+                 alert('Button hit 1');
+                 this.set('company.Create$', true);
+             }
+         });
+        </script>
+    </dom-module>
+    <dom-module id="modify-company">
+        <template>
+                <div style="border:1px dotted gray;padding:10px;">
+                    <h2><span>{{item.Name$}}</span></h2>
+                    <h3>Franchise offices</h3>
+                    <p><strong>Sort on</strong></p>
+                    <p><button on-click="sortNumberOfHomes">Number of homes</button> - <button on-click="sortTotalCommission">Total commission</button> - <button on-click="sortAverageCommission">Average commission</button> - <button on-click="sortPositiveTrend">Positive trend</button></p>
+                    <table style="width:75%;" class="altrowstable">
+                        <tr>
+                            <td><strong>Name</strong></td>
+                            <td><strong>Number of homes sold</strong></td>
+                            <td><strong>Total commission</strong></td>
+                            <td><strong>Average commission</strong></td>
+                            <td><strong>Trend</strong></td>
+                        </tr>
+                        <template is="dom-repeat" items="{{item.FranchiseesList$}}" as="franchise">
+                            <tr>
+                                <td><a href="/Ammad/franchise/{{franchise.ObId}}"><span>{{franchise.Name}}</span></a></td>
+                                <td><span>{{franchise.NumberOfHomesSold}}</span></td>
+                                <td><span>{{franchise.TotalCommission}}</span></td>
+                                <td><span>{{franchise.AverageCommission}}</span></td>
+                                <td><span>{{franchise.Trend}}</span></td>
+                            </tr>
+                        </template>
+                    </table>
+
+                    <h3>New franchise office</h3>
+                    <p>Name: <input type="text" value="{{item.NewFranchise$.Name$::change}}" /></p>
+                    <p><button on-click="createFranchisee">Create new</button></p>
+                </div>
+        </template>
+        <script>
+            Polymer({
+                is: "modify-company",
+                properties: {
+                    item: {
+                        type: Object,
+                        notify: true,
+                        reflectToAttribute: true
+                    }
+                },
+                save: function (e) {
+                    this.item.Save$++;
+                },
+                createFranchisee: function (e) {
+                    this.item.Create$++;
+                },
+                goToFranchise: function (e) {
+                    window.location.href = "/Ammad/franchise/" + this.item.ObId;
+                },
+                sortNumberOfHomes: function (e) {
+                    this.item.SortNumberOfHomesSold$++;
+                },
+                sortTotalCommission: function (e) {
+                    this.item.SortTotalCommission$++;
+                },
+                sortAverageCommission: function (e) {
+                    this.item.SortAverageCommission$++;
+                },
+                sortPositiveTrend: function (e) {
+                    this.item.SortPositiveTrend$++;
+                }
+            });
+        </script>
+    </dom-module>
+</template>
+<starcounter-debug-aid></starcounter-debug-aid>
+<puppet-client ref="root"></puppet-client>
+</body>
+</html>

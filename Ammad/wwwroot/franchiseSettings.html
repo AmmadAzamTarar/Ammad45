@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Test project</title>
+    <script src="/sys/webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="/sys/polymer/polymer.html">
+    <link rel="import" href="/sys/puppet-client/puppet-client.html">
+    <style>
+        button {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+        body {
+            font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
+        }
+
+        input {
+            font-size: 1em;
+        }
+
+         table.altrowstable {
+            font-family: verdana,arial,sans-serif;
+            font-size: 11px;
+            color: #333333;
+            border-width: 1px;
+            border-color: #a9c6c9;
+            border-collapse: collapse;
+        }
+
+        table.altrowstable th {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+
+        table.altrowstable td {
+            border-width: 1px;
+            padding: 8px;
+            border-style: solid;
+            border-color: #a9c6c9;
+        }
+
+        .oddrowcolor {
+            background-color: #d4e3e5;
+        }
+
+        .evenrowcolor {
+            background-color: #c3dde0;
+        }
+
+        body {
+            font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
+        }
+
+        input {
+            font-size: 1em;
+        }
+    
+    </style>
+</head>
+<body>
+    <template id="root" is="dom-bind">
+        <p><a href="/Ammad/start"> < < Back to start</a></p>
+        <h1>Settings: <span>{{model.Name$}}</span></h1>
+        <franchise-settings model="{{model}}"></franchise-settings>
+
+        <dom-module id="franchise-settings">
+            <template>
+                <h2>Edit franchise settings</h2>
+                <table style="width:30%;" class="altrowstable">
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            <input type="text" value="{{model.Name$::change}}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Street
+                        </td>
+                        <td>
+                            <input type="text" value="{{model.Address$.Street$::change}}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Number</td>
+                        <td><input type="text" value="{{model.Address$.Number$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Zip code</td>
+                        <td><input type="text" value="{{model.Address$.ZipCode$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td><input type="text" value="{{model.Address$.City$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td><input type="text" value="{{model.Address$.Country$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Address</td>
+                        <td></td>
+                    </tr>
+                </table>
+                <p><button on-click="save">Save</button></p>
+                <h2>Register new Home of sale</h2>
+                <p><strong>Home info</strong></p>
+                <table style="width:30%;" class="altrowstable">
+                    <tr>
+                        <td>Street</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Home.Address$.Street$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Number</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Home.Address$.Number$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Zip code</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Home.Address$.ZipCode$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Home.Address$.City$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Home.Address$.Country$::change}}" /></td>
+                    </tr>
+                </table>
+                <p><strong>Transaction info</strong></p>
+                <table style="width:30%;" class="altrowstable">
+                    <tr>
+                        <td>Date</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Start$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Sales price</td>
+                        <td><input type="text" value="{{model.NewTransaction$.TransactionValue$::change}}" /></td>
+                    </tr>
+                    <tr>
+                        <td>Commission</td>
+                        <td><input type="text" value="{{model.NewTransaction$.Commission$::change}}" /></td>
+                    </tr>
+                </table>
+                <p><button on-click="create">Register</button></p>
+                <h2>List of transactions</h2>
+                <table style="width:75%" class="altrowstable">
+                    <tr>
+                        <td><strong>Date</strong></td>
+                        <td><strong>Sales price</strong></td>
+                        <td><strong>Commission</strong></td>
+                        <td><strong>Address</strong></td>
+                    </tr>
+                    <template is="dom-repeat" items="{{model.Transactions$}}">
+                        <tr>
+                            <td><span>{{item.Start}}</span></td>
+                            <td><span>{{item.TransactionValue}}</span></td>
+                            <td><span>{{item.Commission}}</span></td>
+                            <td><span>{{item.Home.Address$.FullAddress$}}</span></td>
+                        </tr>
+                    </template>
+                </table>
+            </template>
+            <script>
+         Polymer({
+             is: "franchise-settings",
+             properties: {
+                 model: {
+                     type: Object,
+                     notify: true,
+                     reflectToAttribute: true
+                 },
+                 company: {
+                     type: Object
+                 },
+             },
+             save: function (e) {
+                 this.model.Save$++;
+             },
+             create: function (e) {
+                 this.model.Create$++;
+             }
+         });
+            </script>
+        </dom-module>
+    </template>
+    <puppet-client ref="root"></puppet-client>
+</body>
+</html>

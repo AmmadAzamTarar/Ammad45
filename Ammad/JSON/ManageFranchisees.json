@@ -1,0 +1,56 @@
+{
+    "Html": "",
+    "SelectedCompanyId$": "",
+    "$Companies$": { "Bind": "Companies_" },
+    "Companies$": [
+        {
+            "ObId": "",
+            "Name$": "",
+            "OrganisationNumber$": "",
+            "Address$": {
+                "Street$": "",
+                "Number$": "",
+                "ZipCode$": 0,
+                "City$": "",
+                "Country$": "",
+                "FullAddress": ""
+            },
+            "$FranchiseesList$": { "Bind": "FranchiseeList_" },
+            "FranchiseesList$": [
+                {
+                    "ObId": "",
+                    "Name": "",
+                    "Address$": {
+                        "Street$": "",
+                        "Number$": "",
+                        "ZipCode$": 0,
+                        "City$": "",
+                        "Country$": "",
+                        "FullAddress$": ""
+                    },
+                    "NumberOfHomesSold": 0,
+                    "TotalCommission": 0,
+                    "AverageCommission": 0,
+                    "Trend": 0
+                }
+            ],
+            "NewFranchise$": {
+                "Name$": ""
+            },
+            "SortBy$": "",
+            "Save$": 0,
+            "Create$": 0,
+            "Sort$": 0,
+            "SortNumberOfHomesSold$": 0,
+            "SortTotalCommission$": 0,
+            "SortAverageCommission$": 0,
+            "SortPositiveTrend$": 0
+        }
+    ],
+    "NewCompany$": {
+        "Name$": "",
+        "OrganisationNumber$": ""
+    },
+    "Save$": 0,
+    "Create$": 0
+}

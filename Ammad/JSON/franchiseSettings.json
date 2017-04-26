@@ -1,0 +1,48 @@
+{
+    "Html": "",
+    "ObId": "",
+    "Name$": "",
+    "Address$": {
+        "Street$": "",
+        "Number$": "",
+        "ZipCode$": 0,
+        "City$": "",
+        "Country$": "",
+        "FullAddress$": ""
+    },
+    "$Transactions$": { "Bind": "Transactions_" },
+    "Transactions$": [
+        {
+            "Start": "",
+            "TransactionValue": 0,
+            "Commission": 0,
+            "Home": {
+                "Address$": {
+                    "Street$": "",
+                    "Number$": "",
+                    "ZipCode$": 0,
+                    "City$": "",
+                    "Country$": "",
+                    "FullAddress$": ""
+                }
+            }
+        }
+    ],
+    "NewTransaction$": {
+        "Start$": "",
+        "TransactionValue$": 0,
+        "Commission$": 0,
+        "Home": {
+            "Address$": {
+                "Street$": "",
+                "Number$": "",
+                "ZipCode$": 0,
+                "City$": "",
+                "Country$": "",
+                "FullAddress$": ""
+            }
+        }
+    },
+    "Save$": 0,
+    "Create$": 0
+}
